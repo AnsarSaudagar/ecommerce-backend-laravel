@@ -1,4 +1,4 @@
-<!-- <?php // config/cors.php
+<?php // config/cors.php
 
 return [
     /*
@@ -67,4 +67,4 @@ return [
     | Whether or not the response can be exposed when credentials are included.
     */
     'supports_credentials' => false,
-]; -->
+];
