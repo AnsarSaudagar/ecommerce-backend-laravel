@@ -39,14 +39,10 @@ class AuthController extends Controller
     // Log in users and issue tokens
     public function login(Request $request)
     {
-        $validation = $request->validate([
+        $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string',
         ]);
-
-        // if (!$validation) {
-        //     return response()->json([""]);
-        // }
 
         $user = User::where('email', $request->email)->first();
 
