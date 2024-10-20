@@ -19,11 +19,13 @@ class AuthController extends Controller
         ]);
 
         $user = User::create([
-            'name' => $request->name,
+            'first_name' => $request->name,
+            'middle_name' => $request->middle_name,
+            'last_name' => $request->last_name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-        // echo "<pre>";print_r($user);exit;
+
         return response()->json([
             'message' => 'User registered successfully',
             'user' => $user,
@@ -59,7 +61,7 @@ class AuthController extends Controller
     // Log out users and revoke tokens
     public function logout(Request $request)
     {
-        
+
         $request->user()->currentAccessToken()->delete();
 
         return response()->json(['message' => 'Logged out successfully']);
