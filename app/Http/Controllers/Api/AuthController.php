@@ -52,10 +52,12 @@ class AuthController extends Controller
             ]);
         }
 
+        
         // Create a new token for the user
         $token = $user->createToken('api-token')->plainTextToken;
+        $user->api_token = $token;
 
-        return response()->json(['token' => $token]);
+        return response()->json($user);
     }
 
     // Log out users and revoke tokens
