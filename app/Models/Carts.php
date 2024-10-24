@@ -11,11 +11,15 @@ class Carts extends Model
     // The table associated with the model (optional if the table follows the naming convention)
     protected $table = 'carts';
 
+    const STATUS_ACTIVE = 1;
+    const STATUS_PURCHASED = 2;
+
     // Specify the fillable fields to allow mass assignment
     protected $fillable = [
         'user_id',
         'product_id',
-        'count' 
+        'count',
+        'status'
     ];
 
     /**
