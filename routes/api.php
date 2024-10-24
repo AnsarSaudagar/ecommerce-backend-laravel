@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CartsController;
 use App\Http\Controllers\Api\ProductCategoryController;
 use App\Http\Controllers\Api\ProductsController;
 use Illuminate\Support\Facades\Route;
@@ -18,4 +19,7 @@ Route::get('/products', [ProductsController::class,'index']);
 Route::get('/product/{id}', [ProductsController::class,'product']);
 Route::get('/products/{category_id}', [ProductsController::class,'productsByCategory']);
 
-
+// Carts Route
+Route::get('/all-carts', [CartsController::class, 'index']);
+Route::get('/carts/{user_id}', [CartsController::class, 'getUserActiveCart']);
+Route::post('/add-cart', [CartsController::class, 'addProductToUserCart']);
