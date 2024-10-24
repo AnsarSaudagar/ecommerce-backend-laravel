@@ -10,8 +10,7 @@ class ProductCategoryController extends Controller
 {
     public function index(){
         $categories = ProductsCategory::all();
-        // return $categories->toJson(JSON_PRETTY_PRINT);
-        return response()->json(ProductsCategory::all());
+        return response()->json($categories);
     }
 
     public function store(Request $request){
