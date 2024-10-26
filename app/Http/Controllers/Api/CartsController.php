@@ -58,7 +58,7 @@ class CartsController extends Controller
      */
     public function getUserActiveCartCategoryWise($user_id, $category_id)
     {
-        $user_cart_category = Carts::select('carts.*', 'products.*')
+        $user_cart_category = Carts::select('carts.product_id')
             ->leftJoin('products', 'products.id', '=', 'carts.product_id')
             ->where('carts.user_id', $user_id)
             ->where('products.category_id', $category_id)
