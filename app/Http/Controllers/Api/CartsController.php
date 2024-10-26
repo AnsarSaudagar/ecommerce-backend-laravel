@@ -120,18 +120,28 @@ class CartsController extends Controller
         }
     }
 
-    public function updateCartCount(Request $request, $cart_id){
+    public function updateCartCount(Request $request, $cart_id)
+    {
         try {
             $cart = Carts::find($cart_id);
             $cart->count += $request->count;
             $cart->save();
             return response()->json(['count' => $cart->count], 201);
-
         } catch (\Exception $exception) {
             return response()->json([
                 'error' => 'An error occurred while updating the count.',
                 'message' => $exception->getMessage(),
             ], 500);
         }
+    }
+
+    public function userCartCount($user_id)
+    {
+        $cart_count = Carts::where('user_id', $user_id)
+            ->sum('count');
+
+        return response()->json([
+            'cart_count' => $cart_count
+        ]);
     }
 }

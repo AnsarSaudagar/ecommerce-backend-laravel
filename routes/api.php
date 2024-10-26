@@ -27,3 +27,4 @@ Route::post('/add-cart', [CartsController::class, 'addProductToUserCart']);
 Route::delete('/carts/{user_id}/{category_id}', [CartsController::class, 'deleteCartForSpecificProduct']);
 Route::delete('/carts/{user_id}', [CartsController::class, 'emptyCartUser']);
 Route::patch('/carts/{cart_id}', [CartsController::class, 'updateCartCount']);
+Route::get('/cart-count/{user_id}', [CartsController::class, 'userCartCount']);
