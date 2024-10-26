@@ -38,10 +38,12 @@ class CartsController extends Controller
      */
     public function getUserActiveCart($user_id)
     {
-        $user_cart = Carts::where([
-            'user_id' => $user_id,
-            'status' => Carts::STATUS_ACTIVE
-        ])->get();
+        $user_cart = Carts::select(["products.id", "products.name", "products.price", "products.photo", "products.description", "carts.count"])
+            ->leftJoin('products', 'products.id', '=', 'carts.product_id')
+            ->where([
+                'user_id' => $user_id,
+                'status' => Carts::STATUS_ACTIVE
+            ])->get();
 
         return response()->json($user_cart);
     }
@@ -77,21 +79,19 @@ class CartsController extends Controller
      */
     public function deleteCartForSpecificProduct($user_id, $product_id)
     {
-        try{
+        try {
             Carts::where([
                 'user_id' => $user_id,
                 'product_id' => $product_id,
                 'status' => Carts::STATUS_ACTIVE
             ])->delete();
             return response()->json(['message' => 'Cart Product deleted successfully'], 201);
-
-        }catch(\Exception $exception){
+        } catch (\Exception $exception) {
             return response()->json([
                 'error' => 'An error occurred while creating the product.',
                 'message' => $exception->getMessage(),
             ], 500);
         }
-        
     }
 
     /**
@@ -101,7 +101,8 @@ class CartsController extends Controller
      * 
      * Deleting all the cart products
      */
-    public function emptyCartUser($user_id){
+    public function emptyCartUser($user_id)
+    {
         try {
             Carts::where([
                 'user_id' => $user_id,
