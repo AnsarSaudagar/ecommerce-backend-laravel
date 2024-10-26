@@ -22,4 +22,5 @@ Route::get('/products/{category_id}', [ProductsController::class,'productsByCate
 // Carts Route
 Route::get('/all-carts', [CartsController::class, 'index']);
 Route::get('/carts/{user_id}', [CartsController::class, 'getUserActiveCart']);
+Route::get('carts/{user_id}/{category_id}', [CartsController::class, 'getUserActiveCartCategoryWise']);
 Route::post('/add-cart', [CartsController::class, 'addProductToUserCart']);

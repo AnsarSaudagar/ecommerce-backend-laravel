@@ -45,4 +45,14 @@ class CartsController extends Controller
 
         return response()->json($user_cart);
     }
+
+    public function getUserActiveCartCategoryWise($user_id, $category_id)
+    {
+        $user_cart_category = Carts::select('carts.*', 'products.*')
+            ->leftJoin('products', 'products.id', '=', 'carts.product_id')
+            ->where('carts.user_id', $user_id)
+            ->where('products.category_id', $category_id)
+            ->get();
+        return response()->json($user_cart_category);
+    }
 }
