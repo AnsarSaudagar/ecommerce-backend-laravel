@@ -125,7 +125,7 @@ class CartsController extends Controller
             $cart = Carts::find($cart_id);
             $cart->count += $request->count;
             $cart->save();
-            return response()->json(['message' => 'Cart Count updated successfully'], 201);
+            return response()->json(['count' => $cart->count], 201);
 
         } catch (\Exception $exception) {
             return response()->json([
