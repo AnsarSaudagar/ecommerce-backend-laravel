@@ -39,7 +39,7 @@ class CartsController extends Controller
     public function getUserActiveCart($user_id)
     {
         $selected_values = ["products.id", "products.name", "products.price", "products.photo", "products.description", "carts.count", "carts.id as cart_id"];
-        
+
         $user_cart = Carts::select($selected_values)
             ->leftJoin('products', 'products.id', '=', 'carts.product_id')
             ->where([
@@ -90,7 +90,7 @@ class CartsController extends Controller
             return response()->json(['message' => 'Cart Product deleted successfully'], 201);
         } catch (\Exception $exception) {
             return response()->json([
-                'error' => 'An error occurred while creating the product.',
+                'error' => 'An error occurred while deleting the product cart.',
                 'message' => $exception->getMessage(),
             ], 500);
         }
@@ -114,7 +114,22 @@ class CartsController extends Controller
             return response()->json(['message' => 'Full Cart deleted successfully'], 201);
         } catch (\Exception $exception) {
             return response()->json([
-                'error' => 'An error occurred while creating the product.',
+                'error' => 'An error occurred while deleting all the cart.',
+                'message' => $exception->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function updateCartCount(Request $request, $cart_id){
+        try {
+            $cart = Carts::find($cart_id);
+            $cart->count += $request->count;
+            $cart->save();
+            return response()->json(['message' => 'Cart Count updated successfully'], 201);
+
+        } catch (\Exception $exception) {
+            return response()->json([
+                'error' => 'An error occurred while updating the count.',
                 'message' => $exception->getMessage(),
             ], 500);
         }
