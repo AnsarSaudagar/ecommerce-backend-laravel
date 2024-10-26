@@ -46,6 +46,16 @@ class CartsController extends Controller
         return response()->json($user_cart);
     }
 
+    /**
+     * Summary of getUserActiveCartCategoryWise
+     * @param mixed $user_id Logged in user id
+     * @param mixed $category_id Category of Product
+     * @return mixed|\Illuminate\Http\JsonResponse
+     * 
+     * @return mixed Array of carts
+     * 
+     * Getting the carts of products category wise
+     */
     public function getUserActiveCartCategoryWise($user_id, $category_id)
     {
         $user_cart_category = Carts::select('carts.*', 'products.*')
@@ -54,5 +64,56 @@ class CartsController extends Controller
             ->where('products.category_id', $category_id)
             ->get();
         return response()->json($user_cart_category);
+    }
+
+
+    /**
+     * Summary of deleteCartForSpecificProduct
+     * @param mixed $user_id
+     * @param mixed $product_id
+     * @return mixed|\Illuminate\Http\JsonResponse
+     * 
+     * Deleting a single product from the cart
+     */
+    public function deleteCartForSpecificProduct($user_id, $product_id)
+    {
+        try{
+            Carts::where([
+                'user_id' => $user_id,
+                'product_id' => $product_id,
+                'status' => Carts::STATUS_ACTIVE
+            ])->delete();
+            return response()->json(['message' => 'Cart Product deleted successfully'], 201);
+
+        }catch(\Exception $exception){
+            return response()->json([
+                'error' => 'An error occurred while creating the product.',
+                'message' => $exception->getMessage(),
+            ], 500);
+        }
+        
+    }
+
+    /**
+     * Summary of emptyCartUser
+     * @param mixed $user_id
+     * @return mixed|\Illuminate\Http\JsonResponse
+     * 
+     * Deleting all the cart products
+     */
+    public function emptyCartUser($user_id){
+        try {
+            Carts::where([
+                'user_id' => $user_id,
+                'status' => Carts::STATUS_ACTIVE
+            ])->delete();
+
+            return response()->json(['message' => 'Full Cart deleted successfully'], 201);
+        } catch (\Exception $exception) {
+            return response()->json([
+                'error' => 'An error occurred while creating the product.',
+                'message' => $exception->getMessage(),
+            ], 500);
+        }
     }
 }
