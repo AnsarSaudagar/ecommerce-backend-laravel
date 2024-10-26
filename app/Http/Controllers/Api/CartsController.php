@@ -38,7 +38,9 @@ class CartsController extends Controller
      */
     public function getUserActiveCart($user_id)
     {
-        $user_cart = Carts::select(["products.id", "products.name", "products.price", "products.photo", "products.description", "carts.count", "carts.id as cart_id"])
+        $selected_values = ["products.id", "products.name", "products.price", "products.photo", "products.description", "carts.count", "carts.id as cart_id"];
+        
+        $user_cart = Carts::select($selected_values)
             ->leftJoin('products', 'products.id', '=', 'carts.product_id')
             ->where([
                 'user_id' => $user_id,
