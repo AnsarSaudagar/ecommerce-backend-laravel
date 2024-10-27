@@ -120,6 +120,14 @@ class CartsController extends Controller
         }
     }
 
+    /**
+     * Summary of updateCartCount
+     * @param \Illuminate\Http\Request $request
+     * @param mixed $cart_id
+     * @return mixed|\Illuminate\Http\JsonResponse
+     * 
+     * Updating cart count or +/- buttons
+     */
     public function updateCartCount(Request $request, $cart_id)
     {
         try {
@@ -134,7 +142,14 @@ class CartsController extends Controller
             ], 500);
         }
     }
-
+    
+    /**
+     * Summary of userCartCount
+     * @param mixed $user_id
+     * @return mixed|\Illuminate\Http\JsonResponse
+     * 
+     * Getting the carts count for specific user
+     */
     public function userCartCount($user_id)
     {
         $cart_count = Carts::where('user_id', $user_id)
